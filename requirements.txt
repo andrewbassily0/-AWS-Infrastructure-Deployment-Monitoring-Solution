@@ -1,0 +1,40 @@
+# Server Availability Monitor Requirements
+# Python 3.7+ required
+
+# GUI Framework (included with Python)
+# tkinter - bundled with Python standard library
+
+# Standard library modules used:
+# - threading
+# - time
+# - subprocess
+# - platform
+# - os
+# - smtplib
+# - email.mime.text
+# - email.mime.multipart
+# - datetime
+# - logging
+# - typing
+# - json
+
+# Optional: For enhanced functionality
+# You can install these packages for additional features:
+
+# For system monitoring (optional)
+psutil>=5.8.0
+
+# For enhanced email templates (optional)
+jinja2>=3.0.0
+
+# For configuration file management (optional)
+python-dotenv>=0.19.0
+
+# For GUI themes (optional)
+ttkthemes>=3.2.0
+
+# Installation instructions:
+# pip install -r requirements.txt
+#
+# Note: The application runs with Python standard library only.
+# Additional packages are optional for enhanced features. 

@@ -1,0 +1,620 @@
+# Example terraform.tfvars file
+# Copy this file to terraform.tfvars and modify as needed
+
+# Project Configuration
+project_name = "rooman"
+environment = "prod"
+
+# AWS Configuration
+aws_region = "eu-central-1"
+availability_zones = ["eu-central-1a", "eu-central-1b"]
+
+# VPC Configuration
+vpc_cidr = "10.0.0.0/16"
+public_subnet_cidrs = ["10.0.1.0/24", "10.0.2.0/24"]
+private_subnet_cidrs = ["10.0.3.0/24", "10.0.4.0/24"]
+
+# VPC Features
+enable_dns_hostnames = true
+enable_dns_support = true
+map_public_ip_on_launch = true
+
+# Common Tags
+common_tags = {
+  Environment = "prod"
+  Project     = "rooman"
+  ManagedBy   = "terraform"
+  Owner       = "DevOps Team"
+  CostCenter  = "Infrastructure"
+}
+
+# Security Group Configuration
+allowed_ssh_cidrs = ["0.0.0.0/0"]        # Allow SSH from anywhere (consider restricting in production)
+allowed_http_cidrs = ["0.0.0.0/0"]       # Allow HTTP from anywhere
+allowed_https_cidrs = ["0.0.0.0/0"]      # Allow HTTPS from anywhere
+allowed_icmp_cidrs = ["0.0.0.0/0"]       # Allow ICMP from anywhere
+app_port = 8080                           # Application port
+mysql_port = 3306                         # MySQL port
+
+# EC2 Instance Configuration
+key_pair_name = "your-key-pair-name"      # REQUIRED: Replace with your actual key pair name
+web_instance_type = "t3.micro"            # Instance type for web servers
+app_instance_type = "t3.small"            # Instance type for application servers
+web_server_os = "ubuntu"                  # Operating system for web servers (ubuntu or amazon_linux)
+app_server_os = "ubuntu"                  # Operating system for app servers (ubuntu or amazon_linux)
+web_server_type = "nginx"                 # Web server type (nginx or apache)
+web_root_volume_size = 20                 # Root volume size for web servers (GB)
+app_root_volume_size = 30                 # Root volume size for app servers (GB)
+enable_detailed_monitoring = false        # Enable detailed monitoring for EC2 instances
+
+# Alternative configuration examples:
+
+# For a different region (uncomment and modify as needed):
+# aws_region = "us-east-1"
+# availability_zones = ["us-east-1a", "us-east-1b"]
+
+# For a staging environment:
+# environment = "staging"
+# vpc_cidr = "10.1.0.0/16"
+# public_subnet_cidrs = ["10.1.1.0/24", "10.1.2.0/24"]
+# private_subnet_cidrs = ["10.1.3.0/24", "10.1.4.0/24"]
+
+# For a development environment:
+# environment = "dev"
+# vpc_cidr = "10.2.0.0/16"
+# public_subnet_cidrs = ["10.2.1.0/24", "10.2.2.0/24"]
+# private_subnet_cidrs = ["10.2.3.0/24", "10.2.4.0/24"]
+
+# Security Configuration Examples:
+
+# Production security (restrictive SSH access):
+# allowed_ssh_cidrs = ["203.0.113.0/24", "198.51.100.0/24"]  # Replace with your office/VPN IPs
+# allowed_http_cidrs = ["0.0.0.0/0"]
+# allowed_https_cidrs = ["0.0.0.0/0"]
+
+# Development security (more permissive for testing):
+# allowed_ssh_cidrs = ["0.0.0.0/0"]
+# allowed_http_cidrs = ["0.0.0.0/0"]
+# allowed_https_cidrs = ["0.0.0.0/0"]
+
+# Custom application ports:
+# app_port = 9090        # If using a different application port
+# mysql_port = 3306      # Standard MySQL port
+
+# EC2 Configuration Examples:
+
+# Production configuration (larger instances):
+# web_instance_type = "t3.small"
+# app_instance_type = "t3.medium"
+# web_root_volume_size = 30
+# app_root_volume_size = 50
+
+# Development configuration (smaller instances):
+# web_instance_type = "t3.micro"
+# app_instance_type = "t3.micro"
+# web_root_volume_size = 10
+# app_root_volume_size = 20
+
+# Mixed OS configuration:
+# web_server_os = "ubuntu"         # Web servers on Ubuntu
+# app_server_os = "amazon_linux"   # App servers on Amazon Linux
+
+# Apache configuration:
+# web_server_type = "apache"       # Use Apache instead of Nginx
+
+# RDS Database Configuration
+db_name = "appdb"                           # Database name
+db_username = "admin"                       # Database username
+db_password = ""                            # Database password (leave empty to auto-generate)
+db_engine_version = "8.0.35"               # MySQL engine version
+db_instance_class = "db.t3.micro"          # Database instance class
+db_allocated_storage = 20                  # Allocated storage in GB
+db_storage_type = "gp3"                    # Storage type
+db_multi_az = true                         # Enable Multi-AZ for high availability
+db_backup_retention_period = 7             # Backup retention period in days
+db_backup_window = "03:00-04:00"           # Backup window (UTC)
+db_maintenance_window = "sun:04:00-sun:05:00"  # Maintenance window (UTC)
+db_auto_minor_version_upgrade = true       # Enable automatic minor version upgrades
+db_monitoring_interval = 60                # Enhanced monitoring interval (seconds)
+db_performance_insights_enabled = true     # Enable Performance Insights
+db_performance_insights_retention_period = 7  # Performance Insights retention (days)
+db_max_connections = "100"                 # Maximum database connections
+db_skip_final_snapshot = false             # Skip final snapshot when deleting
+db_deletion_protection = true              # Enable deletion protection
+
+# RDS Configuration Examples:
+
+# Production configuration (larger instance):
+# db_instance_class = "db.t3.small"
+# db_allocated_storage = 100
+# db_backup_retention_period = 30
+# db_multi_az = true
+# db_deletion_protection = true
+
+# Development configuration (smaller instance):
+# db_instance_class = "db.t3.micro"
+# db_allocated_storage = 20
+# db_backup_retention_period = 1
+# db_multi_az = false
+# db_deletion_protection = false
+# db_skip_final_snapshot = true
+
+# High-performance configuration:
+# db_instance_class = "db.r5.large"
+# db_storage_type = "io1"
+# db_allocated_storage = 500
+# db_performance_insights_enabled = true
+# db_monitoring_interval = 15
+
+# Custom backup and maintenance windows:
+# db_backup_window = "02:00-03:00"           # 2 AM UTC backup
+# db_maintenance_window = "sun:03:00-sun:04:00"  # Sunday 3 AM UTC maintenance
+
+# Security configuration:
+# db_password = "your-secure-password"       # Set a custom password (not recommended in file)
+# db_username = "dbadmin"                    # Custom username
+
+# ==============================================================================
+# S3 BACKUP BUCKET CONFIGURATION
+# ==============================================================================
+
+# S3 Versioning
+s3_versioning_enabled = true
+
+# S3 Encryption (AES256 or aws:kms)
+s3_encryption_algorithm = "AES256"
+s3_bucket_key_enabled = true
+
+# S3 Lifecycle Rules
+s3_glacier_transition_days = 7        # Transition to Glacier after 7 days
+s3_deep_archive_transition_days = 90  # Transition to Deep Archive after 90 days (0 to disable)
+s3_expiration_days = 30               # Delete objects after 30 days
+
+# S3 Non-current Version Management
+s3_noncurrent_version_glacier_transition_days = 7
+s3_noncurrent_version_expiration_days = 30
+
+# S3 Multipart Upload Cleanup
+s3_abort_incomplete_multipart_upload_days = 7
+
+# S3 Notifications (optional)
+s3_enable_notifications = false
+# s3_notification_topic_arn = "arn:aws:sns:eu-central-1:123456789012:backup-notifications"
+
+# S3 Access Logging (optional)
+s3_enable_access_logging = false
+# s3_access_log_bucket = "my-access-logs-bucket"
+# s3_access_log_prefix = "s3-access-logs/"
+
+# ==============================================================================
+# EXAMPLE S3 CONFIGURATIONS FOR DIFFERENT ENVIRONMENTS
+# ==============================================================================
+
+# Development Environment (Short retention)
+# s3_glacier_transition_days = 3
+# s3_expiration_days = 7
+# s3_noncurrent_version_expiration_days = 7
+
+# Staging Environment (Medium retention)
+# s3_glacier_transition_days = 7
+# s3_expiration_days = 30
+# s3_noncurrent_version_expiration_days = 30
+
+# Production Environment (Long retention)
+# s3_glacier_transition_days = 30
+# s3_deep_archive_transition_days = 90
+# s3_expiration_days = 365
+# s3_noncurrent_version_expiration_days = 90
+
+# Compliance Environment (Extended retention)
+# s3_glacier_transition_days = 90
+# s3_deep_archive_transition_days = 365
+# s3_expiration_days = 2555  # 7 years
+# s3_noncurrent_version_expiration_days = 365
+
+# ==============================================================================
+# APPLICATION LOAD BALANCER (ALB) CONFIGURATION
+# ==============================================================================
+
+# ALB Access Control
+alb_allowed_cidrs = ["0.0.0.0/0"]  # Allow access from anywhere (consider restricting in production)
+alb_deletion_protection = false     # Enable in production
+
+# ALB Health Check Configuration
+alb_health_check_healthy_threshold = 2      # Consecutive successful health checks
+alb_health_check_unhealthy_threshold = 2    # Consecutive failed health checks
+alb_health_check_timeout = 5               # Health check timeout (seconds)
+alb_health_check_interval = 30             # Health check interval (seconds)
+alb_health_check_path = "/"                # Health check path
+alb_health_check_matcher = "200"           # Success response codes
+
+# Session Stickiness (optional)
+alb_enable_stickiness = false               # Enable session stickiness
+alb_stickiness_duration = 86400            # Stickiness duration (seconds)
+
+# HTTPS Configuration (optional)
+alb_enable_https = false                    # Enable HTTPS listener
+alb_redirect_http_to_https = false          # Redirect HTTP to HTTPS
+alb_ssl_policy = "ELBSecurityPolicy-TLS-1-2-2017-01"  # SSL policy
+# alb_certificate_arn = "arn:aws:acm:eu-central-1:123456789012:certificate/abcd1234-..."
+
+# ALB Access Logs (optional)
+alb_enable_access_logs = false              # Enable ALB access logs
+# alb_access_logs_bucket = "my-alb-logs-bucket"
+# alb_access_logs_prefix = "alb-logs/"
+
+# ==============================================================================
+# AUTO SCALING GROUP (ASG) CONFIGURATION
+# ==============================================================================
+
+# ASG Size Configuration
+asg_min_size = 2                           # Minimum instances
+asg_max_size = 5                           # Maximum instances
+asg_desired_capacity = 2                   # Desired instances
+
+# ASG Health Check
+asg_health_check_grace_period = 300        # Health check grace period (seconds)
+asg_instance_warmup = 300                  # Instance warmup time (seconds)
+
+# Scaling Policies
+asg_scale_out_adjustment = 1               # Instances to add when scaling out
+asg_scale_out_cooldown = 300               # Cooldown after scaling out (seconds)
+asg_scale_in_adjustment = -1               # Instances to remove when scaling in
+asg_scale_in_cooldown = 300                # Cooldown after scaling in (seconds)
+
+# CPU-based Scaling Thresholds
+asg_cpu_high_threshold = 60                # CPU > 60% triggers scale out
+asg_cpu_high_evaluation_periods = 2        # Evaluation periods for high CPU
+asg_cpu_high_period = 300                  # Period for high CPU alarm (seconds)
+
+asg_cpu_low_threshold = 30                 # CPU < 30% triggers scale in
+asg_cpu_low_evaluation_periods = 2         # Evaluation periods for low CPU
+asg_cpu_low_period = 300                   # Period for low CPU alarm (seconds)
+
+# Instance Refresh Configuration
+asg_instance_refresh_min_healthy_percentage = 50  # Minimum healthy percentage during refresh
+
+# Target Health Monitoring
+alb_unhealthy_target_threshold = 1         # Minimum healthy targets
+alb_unhealthy_target_evaluation_periods = 2  # Evaluation periods
+alb_unhealthy_target_period = 300          # Period for target health alarm
+
+# Web Server Volume Configuration
+web_root_volume_type = "gp3"               # Root volume type (gp2, gp3, io1, io2)
+
+# ==============================================================================
+# EXAMPLE ALB & ASG CONFIGURATIONS FOR DIFFERENT ENVIRONMENTS
+# ==============================================================================
+
+# Development Environment (Cost-optimized)
+# asg_min_size = 1
+# asg_max_size = 3
+# asg_desired_capacity = 1
+# asg_cpu_high_threshold = 70
+# asg_cpu_low_threshold = 20
+# alb_deletion_protection = false
+
+# Staging Environment (Moderate scaling)
+# asg_min_size = 2
+# asg_max_size = 4
+# asg_desired_capacity = 2
+# asg_cpu_high_threshold = 65
+# asg_cpu_low_threshold = 25
+# alb_deletion_protection = false
+
+# Production Environment (High availability)
+# asg_min_size = 3
+# asg_max_size = 10
+# asg_desired_capacity = 3
+# asg_cpu_high_threshold = 60
+# asg_cpu_low_threshold = 30
+# alb_deletion_protection = true
+# alb_enable_https = true
+# alb_redirect_http_to_https = true
+# alb_certificate_arn = "arn:aws:acm:eu-central-1:123456789012:certificate/your-cert-id"
+
+# High-Performance Environment
+# asg_min_size = 4
+# asg_max_size = 20
+# asg_desired_capacity = 4
+# asg_cpu_high_threshold = 50
+# asg_cpu_low_threshold = 20
+# asg_scale_out_adjustment = 2
+# asg_scale_in_adjustment = -1
+# web_instance_type = "t3.medium"
+
+# Security-Focused Environment
+# alb_allowed_cidrs = ["10.0.0.0/8", "192.168.0.0/16"]  # Restrict to private networks
+# alb_enable_https = true
+# alb_redirect_http_to_https = true
+# alb_ssl_policy = "ELBSecurityPolicy-TLS-1-2-Ext-2018-06"
+
+# High-Traffic Environment
+# asg_min_size = 5
+# asg_max_size = 50
+# asg_desired_capacity = 5
+# asg_cpu_high_threshold = 55
+# asg_cpu_low_threshold = 25
+# asg_scale_out_adjustment = 3
+# asg_scale_out_cooldown = 180
+# asg_scale_in_cooldown = 600
+# alb_enable_stickiness = true
+# alb_stickiness_duration = 3600
+
+# ==============================================================================
+# CLOUDWATCH MONITORING & ALERTS CONFIGURATION
+# ==============================================================================
+
+# SNS Alert Configuration
+alert_email = "admin@example.com"               # Email address for receiving alerts
+
+# CloudWatch Log Retention
+flow_logs_retention_days = 14                   # VPC Flow Logs retention (days)
+cloudtrail_retention_days = 30                  # CloudTrail logs retention (days)
+
+# CloudTrail Configuration
+cloudtrail_multi_region = true                  # Enable multi-region CloudTrail
+flow_logs_traffic_type = "ALL"                  # VPC Flow Logs traffic type (ALL, ACCEPT, REJECT)
+
+# EC2 Monitoring Thresholds
+ec2_cpu_alarm_threshold = 70                    # EC2 CPU alarm threshold (%)
+ec2_cpu_alarm_evaluation_periods = 2            # Number of evaluation periods
+ec2_cpu_alarm_period = 300                      # Alarm period (seconds)
+
+# RDS Monitoring Thresholds
+rds_cpu_alarm_threshold = 80                    # RDS CPU alarm threshold (%)
+rds_cpu_alarm_evaluation_periods = 2            # Number of evaluation periods
+rds_cpu_alarm_period = 300                      # Alarm period (seconds)
+
+rds_connections_alarm_threshold = 80             # RDS connections threshold
+rds_connections_alarm_evaluation_periods = 2    # Number of evaluation periods
+rds_connections_alarm_period = 300              # Alarm period (seconds)
+
+rds_storage_alarm_threshold = 2000000000        # RDS free storage threshold (2GB in bytes)
+rds_storage_alarm_evaluation_periods = 1       # Number of evaluation periods
+rds_storage_alarm_period = 300                  # Alarm period (seconds)
+
+# Security Monitoring Thresholds
+root_login_alarm_threshold = 0                  # Root login attempts (0 = any attempt triggers alarm)
+root_login_alarm_evaluation_periods = 1        # Number of evaluation periods
+root_login_alarm_period = 300                   # Alarm period (seconds)
+
+security_group_alarm_threshold = 0              # Security group changes (0 = any change triggers alarm)
+security_group_alarm_evaluation_periods = 1    # Number of evaluation periods
+security_group_alarm_period = 300               # Alarm period (seconds)
+
+console_login_alarm_threshold = 3               # Console login failures threshold
+console_login_alarm_evaluation_periods = 1     # Number of evaluation periods
+console_login_alarm_period = 300                # Alarm period (seconds)
+
+unauthorized_api_alarm_threshold = 5            # Unauthorized API calls threshold
+unauthorized_api_alarm_evaluation_periods = 1  # Number of evaluation periods
+unauthorized_api_alarm_period = 300             # Alarm period (seconds)
+
+# ==============================================================================
+# EXAMPLE MONITORING CONFIGURATIONS FOR DIFFERENT ENVIRONMENTS
+# ==============================================================================
+
+# Development Environment (Less strict monitoring)
+# flow_logs_retention_days = 7
+# cloudtrail_retention_days = 14
+# ec2_cpu_alarm_threshold = 80
+# rds_cpu_alarm_threshold = 85
+# console_login_alarm_threshold = 5
+# unauthorized_api_alarm_threshold = 10
+
+# Staging Environment (Moderate monitoring)
+# flow_logs_retention_days = 14
+# cloudtrail_retention_days = 30
+# ec2_cpu_alarm_threshold = 75
+# rds_cpu_alarm_threshold = 80
+# console_login_alarm_threshold = 3
+# unauthorized_api_alarm_threshold = 5
+
+# Production Environment (Strict monitoring)
+# flow_logs_retention_days = 30
+# cloudtrail_retention_days = 90
+# ec2_cpu_alarm_threshold = 70
+# rds_cpu_alarm_threshold = 75
+# rds_connections_alarm_threshold = 70
+# rds_storage_alarm_threshold = 5000000000  # 5GB
+# console_login_alarm_threshold = 1
+# unauthorized_api_alarm_threshold = 3
+
+# High-Security Environment (Very strict monitoring)
+# flow_logs_retention_days = 90
+# cloudtrail_retention_days = 365
+# cloudtrail_multi_region = true
+# ec2_cpu_alarm_threshold = 60
+# rds_cpu_alarm_threshold = 70
+# rds_connections_alarm_threshold = 60
+# root_login_alarm_threshold = 0        # Alert on any root usage
+# security_group_alarm_threshold = 0    # Alert on any security group changes
+# console_login_alarm_threshold = 1     # Alert on any login failure
+# unauthorized_api_alarm_threshold = 1  # Alert on any unauthorized call
+
+# Cost-Optimized Environment (Minimal monitoring)
+# flow_logs_retention_days = 3
+# cloudtrail_retention_days = 7
+# ec2_cpu_alarm_threshold = 85
+# rds_cpu_alarm_threshold = 90
+# console_login_alarm_threshold = 10
+# unauthorized_api_alarm_threshold = 20
+
+# Compliance Environment (Extended retention)
+# flow_logs_retention_days = 365
+# cloudtrail_retention_days = 2555      # 7 years
+# cloudtrail_multi_region = true
+# ec2_cpu_alarm_threshold = 70
+# rds_cpu_alarm_threshold = 75
+# root_login_alarm_threshold = 0
+# security_group_alarm_threshold = 0
+
+# ==============================================================================
+# AWS BACKUP CONFIGURATION
+# ==============================================================================
+
+# Backup Notification Settings
+backup_notification_email = "backup-admin@example.com"  # Email for backup notifications
+
+# Backup Schedule Configuration (Bahrain time zone)
+backup_schedule_expression = "cron(0 23 * * ? *)"       # Daily at 2:00 AM Bahrain time (23:00 UTC)
+backup_weekly_schedule_expression = "cron(0 23 ? * SUN *)"  # Weekly on Sunday at 2:00 AM Bahrain time
+backup_monthly_schedule_expression = "cron(0 23 1 * ? *)"   # Monthly on 1st at 2:00 AM Bahrain time
+
+# Backup Window Configuration
+backup_start_window = 480                                # 8 hours start window (minutes)
+backup_completion_window = 10080                         # 7 days completion window (minutes)
+
+# Backup Retention Policy
+backup_delete_after = 30                                 # Delete daily backups after 30 days
+backup_cold_storage_after = 30                          # Move to cold storage after 30 days
+backup_weekly_delete_after = 365                        # Delete weekly backups after 1 year
+backup_monthly_delete_after = 2555                      # Delete monthly backups after 7 years
+
+# Backup Features
+backup_s3_enabled = true                                 # Enable S3 bucket backups
+backup_encryption_enabled = true                        # Enable backup encryption
+backup_compliance_enabled = true                        # Enable compliance features
+backup_lifecycle_enabled = true                         # Enable lifecycle management
+
+# Backup Recovery Point Tags
+backup_recovery_point_tags = {
+  Environment = "Production"
+  BackupType  = "Automated"
+  Compliance  = "Required"
+}
+
+# KMS Configuration
+backup_kms_deletion_window = 7                          # KMS key deletion window (days)
+
+# Backup Monitoring
+backup_log_retention_days = 30                          # Backup events log retention (days)
+backup_alarm_threshold = 0                              # Failed backup jobs threshold (0 = any failure)
+backup_alarm_evaluation_periods = 1                     # Alarm evaluation periods
+backup_alarm_period = 300                               # Alarm period (seconds)
+
+# Advanced Backup Features
+backup_cross_region_enabled = false                     # Enable cross-region replication
+backup_cross_region_destination = "us-east-1"          # Cross-region destination
+backup_reporting_enabled = false                        # Enable daily backup reports
+backup_report_schedule = "cron(0 8 * * ? *)"           # Daily reports at 8:00 AM
+backup_continuous_enabled = false                       # Enable continuous backup
+
+# ==============================================================================
+# EXAMPLE BACKUP CONFIGURATIONS FOR DIFFERENT ENVIRONMENTS
+# ==============================================================================
+
+# Development Environment (Cost-optimized, shorter retention)
+# backup_notification_email = "dev-team@example.com"
+# backup_delete_after = 7
+# backup_cold_storage_after = 7
+# backup_weekly_delete_after = 30
+# backup_monthly_delete_after = 90
+# backup_s3_enabled = false
+# backup_compliance_enabled = false
+# backup_recovery_point_tags = {
+#   Environment = "Development"
+#   BackupType  = "Basic"
+# }
+
+# Staging Environment (Moderate retention)
+# backup_notification_email = "staging-team@example.com"
+# backup_delete_after = 14
+# backup_cold_storage_after = 14
+# backup_weekly_delete_after = 90
+# backup_monthly_delete_after = 365
+# backup_s3_enabled = true
+# backup_compliance_enabled = false
+# backup_recovery_point_tags = {
+#   Environment = "Staging"
+#   BackupType  = "Standard"
+# }
+
+# Production Environment (Standard retention)
+# backup_notification_email = "ops-team@example.com"
+# backup_delete_after = 30
+# backup_cold_storage_after = 30
+# backup_weekly_delete_after = 365
+# backup_monthly_delete_after = 2555
+# backup_s3_enabled = true
+# backup_compliance_enabled = true
+# backup_cross_region_enabled = true
+# backup_cross_region_destination = "us-east-1"
+# backup_recovery_point_tags = {
+#   Environment = "Production"
+#   BackupType  = "Standard"
+#   Compliance  = "Required"
+# }
+
+# High-Availability Environment (Extended retention)
+# backup_notification_email = "critical-ops@example.com"
+# backup_delete_after = 90
+# backup_cold_storage_after = 30
+# backup_weekly_delete_after = 1095  # 3 years
+# backup_monthly_delete_after = 3650  # 10 years
+# backup_s3_enabled = true
+# backup_compliance_enabled = true
+# backup_cross_region_enabled = true
+# backup_reporting_enabled = true
+# backup_continuous_enabled = true
+# backup_recovery_point_tags = {
+#   Environment = "HighAvailability"
+#   BackupType  = "Extended"
+#   Compliance  = "Critical"
+#   RetentionClass = "LongTerm"
+# }
+
+# Compliance Environment (Maximum retention for regulatory requirements)
+# backup_notification_email = "compliance@example.com"
+# backup_delete_after = 365
+# backup_cold_storage_after = 90
+# backup_weekly_delete_after = 2555   # 7 years
+# backup_monthly_delete_after = 3650  # 10 years
+# backup_s3_enabled = true
+# backup_compliance_enabled = true
+# backup_cross_region_enabled = true
+# backup_reporting_enabled = true
+# backup_kms_deletion_window = 30
+# backup_log_retention_days = 365
+# backup_recovery_point_tags = {
+#   Environment = "Compliance"
+#   BackupType  = "Regulatory"
+#   Compliance  = "Mandatory"
+#   RetentionClass = "Regulatory"
+#   DataClassification = "Sensitive"
+# }
+
+# Cost-Optimized Environment (Minimal retention)
+# backup_notification_email = "cost-ops@example.com"
+# backup_delete_after = 7
+# backup_cold_storage_after = 3
+# backup_weekly_delete_after = 30
+# backup_monthly_delete_after = 90
+# backup_s3_enabled = false
+# backup_compliance_enabled = false
+# backup_reporting_enabled = false
+# backup_log_retention_days = 7
+# backup_recovery_point_tags = {
+#   Environment = "CostOptimized"
+#   BackupType  = "Minimal"
+# }
+
+# Disaster Recovery Environment (Cross-region focus)
+# backup_notification_email = "dr-team@example.com"
+# backup_delete_after = 30
+# backup_cold_storage_after = 7
+# backup_weekly_delete_after = 365
+# backup_monthly_delete_after = 2555
+# backup_s3_enabled = true
+# backup_compliance_enabled = true
+# backup_cross_region_enabled = true
+# backup_cross_region_destination = "eu-west-1"
+# backup_reporting_enabled = true
+# backup_continuous_enabled = true
+# backup_recovery_point_tags = {
+#   Environment = "DisasterRecovery"
+#   BackupType  = "CrossRegion"
+#   Compliance  = "Required"
+#   Purpose = "DisasterRecovery"
+# } 

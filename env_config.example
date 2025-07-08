@@ -1,0 +1,43 @@
+# Server Monitor SMTP Configuration
+# Copy this file to .env and update with your actual values
+
+# SMTP Server Settings
+SMTP_SERVER=smtp.gmail.com
+SMTP_PORT=587
+SMTP_USE_TLS=true
+
+# SMTP Authentication
+SMTP_USERNAME=your-email@gmail.com
+SMTP_PASSWORD=your-app-password
+
+# Email Addresses
+SMTP_FROM=your-email@gmail.com
+SMTP_TO=admin@company.com
+
+# Gmail App Password Instructions:
+# 1. Enable 2-factor authentication on your Google account
+# 2. Go to Google Account settings > Security > App passwords
+# 3. Generate an app password for "Mail"
+# 4. Use the generated password as SMTP_PASSWORD
+
+# For other email providers, adjust SMTP_SERVER and SMTP_PORT accordingly:
+# - Outlook: smtp.live.com:587
+# - Yahoo: smtp.mail.yahoo.com:587
+# - Custom SMTP: your-smtp-server.com:587
+
+# Example configurations for different email providers:
+
+# Microsoft Outlook/Hotmail:
+# SMTP_SERVER=smtp.live.com
+# SMTP_PORT=587
+# SMTP_USE_TLS=true
+
+# Yahoo Mail:
+# SMTP_SERVER=smtp.mail.yahoo.com
+# SMTP_PORT=587
+# SMTP_USE_TLS=true
+
+# Custom Corporate Email:
+# SMTP_SERVER=mail.yourcompany.com
+# SMTP_PORT=587
+# SMTP_USE_TLS=true 
