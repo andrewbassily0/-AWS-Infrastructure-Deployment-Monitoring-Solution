@@ -101,4 +101,7 @@ server_monitor_console.log
 *.jar
 *.rar
 *.tar
-*.zip 
+*.zip
+
+# Files directory
+files/ 
